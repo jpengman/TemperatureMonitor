@@ -4,8 +4,7 @@ import javax.annotation.PostConstruct;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -13,11 +12,14 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartSeries;
 
+import se.anviken.temperaturemonitor.persistance.Sensor;
 import se.anviken.temperaturemonitor.persistance.Temperature;
 
 @ManagedBean
@@ -30,8 +32,8 @@ public class DynamicChartView implements Serializable {
 	private EntityManager em;
 	
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyy-MM-dd HH:mm");
-	private Date startDate;
-	private Date endDate;
+	private DateTime startDate;
+	private DateTime endDate;
     
 	@PostConstruct
 	public void init() {
@@ -44,42 +46,42 @@ public class DynamicChartView implements Serializable {
 
 	private void createDateModel() {
 		dateModel = new LineChartModel();
+			
+		setInterval(Period.hours(1));
 		addSerie(14);
 		
 		dateModel.setAnimate(true);
-		dateModel.setBreakOnNull(false);
 		dateModel.setDatatipFormat("%s %.1f");
-		//dateModel.setExtender(extender);
-		dateModel.setLegendCols(0);
-		dateModel.setLegendPlacement(null);
-		dateModel.setLegendRows(0);
-		dateModel.setMouseoverHighlight(true);
-		dateModel.setShowPointLabels(false);
+		dateModel.setLegendPosition("e");
 		dateModel.setShowDatatip(true);
 		
-		dateModel.setTitle("Zoom for Details");
-		dateModel.setZoom(true);
-		dateModel.getAxis(AxisType.Y).setLabel("Values");
-		DateAxis axis = new DateAxis("Dates");
+		dateModel.setTitle("Temperaturgraf");
+		dateModel.getAxis(AxisType.Y).setLabel("Temperatur");
+		DateAxis axis = new DateAxis("Tidpunkt");
 		axis.setTickAngle(-50);
-		axis.setMin(DATE_FORMAT.format(startDate));
-		axis.setMax(DATE_FORMAT.format(endDate));
+		axis.setMin(DATE_FORMAT.format(startDate.toDate()));
+		axis.setMax(DATE_FORMAT.format(endDate.toDate()));
 		axis.setTickFormat("%Y-%m-%d %H:%M");
 
 		dateModel.getAxes().put(AxisType.X, axis);
 	}
 
-	private void addSerie(int sensor) {
+	private void setInterval(Period period) {
+		endDate = new DateTime();
+		startDate = endDate.minus(period);
+	}
+
+	private void addSerie(int sensorId) {
 		LineChartSeries series1 = new LineChartSeries();
-		series1.setLabel("Series 1");
+		TypedQuery<Sensor> sensorQuery = em.createNamedQuery("Sensor.findWithId",Sensor.class);
+		sensorQuery.setParameter("sensorId", sensorId);
+		Sensor sensor = sensorQuery.getSingleResult();
+				
+		series1.setLabel(sensor.getName());
 		TypedQuery<Temperature> tempQuery = em.createNamedQuery("Temperature.ForSensor",Temperature.class);
-		tempQuery.setParameter("sensorId", sensor);
-		Calendar start = Calendar.getInstance();
-		start.add(Calendar.DATE,-1);
-		startDate = start.getTime();
-		endDate = Calendar.getInstance().getTime();
-		tempQuery.setParameter("startDate", startDate );
-		tempQuery.setParameter("endDate", endDate);
+		tempQuery.setParameter("sensorId", sensorId);
+		tempQuery.setParameter("startDate", startDate.toDate() );
+		tempQuery.setParameter("endDate", endDate.toDate());
 		List<Temperature> list = tempQuery.getResultList();
 		
 		for(Temperature temperature:list){
@@ -87,6 +89,36 @@ public class DynamicChartView implements Serializable {
 		}
 		series1.setShowMarker(false);
 		dateModel.addSeries(series1);
-		
 	}
+	
+	private List<String> selectedOptions;
+	private List<Sensor> sensorList;
+    
+    public List<String> getSelectedOptions() {
+        return selectedOptions;
+    }
+    public List<String> getSensorNames() {
+    	if(sensorList==null){
+    		TypedQuery<Sensor> sensorQuery = em.createNamedQuery("Sensor.findAll",Sensor.class);
+    		sensorList = sensorQuery.getResultList();
+    	}
+    	List<String> stringList = new ArrayList<String>();
+    	
+    	for(Sensor sensor:sensorList){
+    		stringList.add(sensor.getName());
+    	}
+		return stringList;
+    }
+    public void setSelectedOptions(List<String> selectedOptions) {
+        this.selectedOptions = selectedOptions;
+        dateModel.clear();
+        for(String name:selectedOptions){
+        	for(Sensor sensor:sensorList){
+        			if (name.equals(sensor.getName())){
+        				addSerie(sensor.getSensorId());
+        			}
+        	}
+        }
+    }
+	
 }

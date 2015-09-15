@@ -8,8 +8,18 @@
     </h:head>  
       
     <h:body>  
-      
-       <p:chart type="line" model="#{dynamicChartView.dateModel}" style="height:400px;"/>
+      <h:form>
+       <p:chart id="chart" type="line" model="#{dynamicChartView.dateModel}" style="height:400px;"/>
+    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        <p:selectManyButton id="display" value="#{dynamicChartView.selectedOptions}">
+            <f:selectItems value="#{dynamicChartView.sensorNames}"></f:selectItems>
+        </p:selectManyButton>
+ 
+        <p:commandButton value="Submit" update="chart" icon="ui-icon-check" />
+        <p:spacer />
+    </h:panelGrid>
+</h:form>
+       
           
     </h:body>  
 </html>  

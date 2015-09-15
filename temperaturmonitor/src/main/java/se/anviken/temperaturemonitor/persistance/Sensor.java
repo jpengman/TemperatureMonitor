@@ -1,7 +1,9 @@
 package se.anviken.temperaturemonitor.persistance;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -11,7 +13,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name="sensors")
-@NamedQuery(name="Sensor.findAll", query="SELECT s FROM Sensor s")
+@NamedQueries({@NamedQuery(name="Sensor.findAll", query="SELECT s FROM Sensor s"),
+	@NamedQuery(name="Sensor.findWithId", query="SELECT s FROM Sensor s where s.sensorId = :sensorId")
+})
 public class Sensor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
