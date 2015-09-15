@@ -14,10 +14,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>se.anviken</groupId>
-	<artifactId>temperaturmonitor</artifactId>
+	<artifactId>temperaturemonitor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>WildFly Quickstarts: temperaturmonitor</name>
+	<name>WildFly Quickstarts: temperaturemonitor</name>
 	<description>A starter Java EE 7 webapp project for use on JBoss WildFly / WildFly, generated from the jboss-javaee6-webapp archetype</description>
 
 	<url>http://wildfly.org</url>

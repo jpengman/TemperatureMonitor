@@ -46,7 +46,8 @@ public class DynamicChartView implements Serializable {
 
 	private void createDateModel() {
 		dateModel = new LineChartModel();
-			
+		Sensor test = new Sensor();	
+		
 		setInterval(Period.hours(1));
 		addSerie(14);
 		
