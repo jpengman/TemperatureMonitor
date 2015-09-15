@@ -30,9 +30,10 @@
       <class>se.anviken.temperaturemonitor.persistance.Temperature</class>
       <class>se.anviken.temperaturemonitor.persistance.TemperaturesArchive</class>
       <properties>
-         <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-         <property name="hibernate.show_sql" value="false" />
+        <!-- Properties for Hibernate -->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"></property>
       </properties>
    </persistence-unit>
 </persistence>
