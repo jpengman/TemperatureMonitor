@@ -18,8 +18,6 @@ import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartSeries;
 
-import com.cgi.osd.transactiondemo.persistence.Booking;
-
 import se.anviken.temperaturemonitor.persistance.Temperature;
 
 @ManagedBean
