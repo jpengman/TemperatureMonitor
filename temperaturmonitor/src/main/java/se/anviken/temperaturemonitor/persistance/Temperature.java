@@ -11,7 +11,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name="temperatures")
-@NamedQuery(name="Temperature.findAll", query="SELECT t FROM Temperature t")
+@NamedQueries({@NamedQuery(name="Temperature.findAll", query="SELECT t FROM Temperature t"),
+	@NamedQuery(name="Temperature.ForSensor", query="SELECT t FROM Temperature t where t.sensorId = :sensorId and t.tempTimestamp BETWEEN :startDate AND :endDate ")})
 public class Temperature implements Serializable {
 	private static final long serialVersionUID = 1L;
 

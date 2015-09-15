@@ -25,7 +25,7 @@
          data source, this example data source is just for development and testing! -->
       <!-- The datasource is deployed as WEB-INF/temperaturmonitor-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/temperaturmonitor-ds.xml -->
-      <jta-data-source>java:jboss/datasources/temperaturmonitorDS</jta-data-source>
+      <jta-data-source>java:jboss/datasources/TemperatureDS</jta-data-source>
       <class>se.anviken.temperaturemonitor.persistance.Sensor</class>
       <class>se.anviken.temperaturemonitor.persistance.Temperature</class>
       <class>se.anviken.temperaturemonitor.persistance.TemperaturesArchive</class>

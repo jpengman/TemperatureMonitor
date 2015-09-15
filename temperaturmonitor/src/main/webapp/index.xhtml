@@ -1,24 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
-	<ui:define name="content">
-
-		<p:tabView dynamic="true" cache = "false">
-			<p:tab title="Boka">
-				<ui:include src="/booking.xhtml" />
-			</p:tab>
-			<p:tab title="Ställ in" >
-				<ui:include src="/setting.xhtml" />
-			</p:tab>
-			<p:tab title="Chatta" >
-				<ui:include src="/chat.xhtml" />
-			</p:tab>
-		</p:tabView>
-
-
-	</ui:define>
-</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+    <h:head>  
+  
+    </h:head>  
+      
+    <h:body>  
+      
+       <p:chart type="line" model="#{dynamicChartView.dateModel}" style="height:400px;"/>
+          
+    </h:body>  
+</html>  
