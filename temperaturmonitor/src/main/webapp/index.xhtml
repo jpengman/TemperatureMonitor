@@ -8,18 +8,41 @@
     </h:head>  
       
     <h:body>  
-      <h:form>
-       <p:chart id="chart" type="line" model="#{dynamicChartView.dateModel}" style="height:400px;"/>
-    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-        <p:selectManyButton id="display" value="#{dynamicChartView.selectedOptions}">
-            <f:selectItems value="#{dynamicChartView.sensorNames}"></f:selectItems>
-        </p:selectManyButton>
+    
+    <h:form>  
+    <p:growl id="messages"/>
  
+  <p:selectCheckboxMenu id="allSensors" value="#{dynamicChartView.selectedOptions}" label="Alla Sensorer"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:400px">
+            <f:selectItems value="#{dynamicChartView.sensorNames}"></f:selectItems>
+        </p:selectCheckboxMenu>
+ 
+    <p:selectCheckboxMenu id="roomSensors" value="#{dynamicChartView.selectedRoomSensors}" label="Rums Sensorer" panelStyle="width:400px" filter="false">
+            <f:selectItems value="#{dynamicChartView.roomSensorNames}" />
+        </p:selectCheckboxMenu>
+        
+        <p:selectCheckboxMenu id="HPSensors" value="#{dynamicChartView.selectedHeatPumpSensors}" label="Värmepumps Sensorer" panelStyle="width:400px" filter="false">
+            <f:selectItems value="#{dynamicChartView.heatPumpSensorNames}" />
+        </p:selectCheckboxMenu>
+
+       <p:chart id="chart" type="line" model="#{dynamicChartView.dateModel}" style="height:600px;"/>
+    
+    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+    
+    
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        <h:outputText id="output" value="Visa #{dynamicChartView.noOfHours} timmar" />
+        <h:inputHidden id="txt5" value="#{dynamicChartView.noOfHours}" />
+        <p:slider for="txt5" display="output" style="width: 200px" displayTemplate="visa {value} timmar" minValue="2" maxValue="24"/>
+    </h:panelGrid>
+
+    <h:panelGrid columns="1" style="margin-bottom: 10px">
+        
+    </h:panelGrid>
         <p:commandButton value="Submit" update="chart" icon="ui-icon-check" />
         <p:spacer />
     </h:panelGrid>
 </h:form>
        
-          
     </h:body>  
 </html>  
