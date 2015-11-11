@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();"
+			title="login">
+        Logga in
+    </h:outputLink>
+
+		<p:dialog header="Login" widgetVar="dlg" resizable="false">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="username" value="Username:" />
+				<p:inputText id="username" value="#{adminView.username}"
+					required="true" label="username" />
+
+				<h:outputLabel for="password" value="Password:" />
+				<p:password id="password" value="#{adminView.password}"
+					required="true" label="password" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Login" update="table"
+						actionListener="#{adminView.login}"
+						oncomplete="handleLoginRequest(xhr, status, args)" />
+				</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+
+
+<p:growl id="msgs" showDetail="true"/>
+ 
+   <p:dataTable id="table" var="sensor" value="#{adminView.sensors}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Row Editing
+       </f:facet>
+ 
+       <p:ajax event="rowEdit" listener="#{adminView.onRowEdit}" update=":form:msgs" />
+       <p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}" update=":form:msgs" />
+ 
+       
+ 
+       <p:column headerText="Namn">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{sensor.name}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{sensor.name}" style="width:100%" label="Name"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Beskrivning">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{sensor.description}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{sensor.description}" style="width:100%" label="description"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+   </p:dataTable>
+ 
+	</h:form>
+
+	<script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+</h:body>
+</html>
