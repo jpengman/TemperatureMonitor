@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.anviken.temperaturemonitor.persistance.Sensor;
+import se.anviken.temperaturemonitor.persistance.SensorType;
 
 public class SensorHandler {
 
-	private List<Sensor> sensorList;
+	protected List<Sensor> sensorList = null;
+	protected List<SensorType> sensorTypeList = null;
 
 	public static int SENSOR_ID = 1;
 	public static int SENSOR_NAME = 2;
@@ -66,5 +68,11 @@ public class SensorHandler {
 
 	public void setSensorList(List<Sensor> sensorList) {
 		this.sensorList = sensorList;
+	}
+	public List<SensorType> getSensorTypeList() {
+		return sensorTypeList;
+	}
+	public void setSensorTypeList(List<SensorType> sensorTypeList) {
+		this.sensorTypeList = sensorTypeList;
 	}
 }

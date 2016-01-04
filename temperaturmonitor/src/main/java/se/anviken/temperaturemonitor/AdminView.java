@@ -21,9 +21,10 @@ import org.primefaces.event.RowEditEvent;
 
 import se.anviken.temperaturemonitor.persistance.PersistenceFacade;
 import se.anviken.temperaturemonitor.persistance.Sensor;
+import se.anviken.temperaturemonitor.persistance.SensorType;
 
 @ManagedBean
-public class AdminView implements Serializable {
+public class AdminView extends SensorHandler implements Serializable {
 
 	@Inject
 	private EntityManager em;
@@ -41,7 +42,6 @@ public class AdminView implements Serializable {
 
 	private boolean loggedIn = false;
 
-	private List<Sensor> sensors = null;
 	private List<Sensor> sensorsNotInDb;
 
 	public String getUsername() {
@@ -87,7 +87,10 @@ public class AdminView implements Serializable {
 	public void init() {
 		TypedQuery<Sensor> sensorQuery = em.createNamedQuery("Sensor.findAll",
 				Sensor.class);
-		sensors = sensorQuery.getResultList();
+		sensorList = sensorQuery.getResultList();
+		TypedQuery<SensorType> sensorTypeQuery = em.createNamedQuery("SensorType.findAll",
+				SensorType.class);
+		sensorTypeList = sensorTypeQuery.getResultList();
 	}
 
 	public void setService(SensorService service) {
@@ -102,13 +105,6 @@ public class AdminView implements Serializable {
 		this.loggedIn = loggedIn;
 	}
 
-	public List<Sensor> getSensors() {
-		return sensors;
-	}
-
-	public void setSensors(List<Sensor> sensorList) {
-		this.sensors = sensorList;
-	}
 
 	public Sensor getSelectedSensor() {
 		return selectedSensor;
@@ -120,9 +116,6 @@ public class AdminView implements Serializable {
 
 	public void onRowEdit(RowEditEvent event) {
 		persistenceFacade.updateSensor((Sensor) event.getObject());
-		FacesMessage msg = new FacesMessage("Car Edited",
-				((Sensor) event.getObject()).getAddress());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 		reloadSensorsNotInDb();
 	}
 
@@ -161,7 +154,7 @@ public class AdminView implements Serializable {
 
 	private void reloadSensorsNotInDb() {
 		List<String> connectedSensors = getConnectedSensors();
-		List<Sensor> inDb = getSensors();
+		List<Sensor> inDb = getSensorList();
 		List<Sensor> notInDb = new ArrayList<Sensor>();
 		for (String address : connectedSensors) {
 			boolean isInDb = false;
