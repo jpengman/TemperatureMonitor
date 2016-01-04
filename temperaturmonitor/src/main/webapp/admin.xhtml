@@ -33,65 +33,101 @@
 		</p:dialog>
 
 
-<p:growl id="msgs" showDetail="true"/>
- 
-   <p:dataTable id="table" var="sensor" value="#{adminView.sensorList}" editable="true" style="margin-bottom:20px">
-       <f:facet name="header">
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:dataTable id="table" var="sensor" value="#{adminView.sensorList}"
+			editable="true" style="margin-bottom:20px">
+			<f:facet name="header">
            Editera Sensorbeskrivningar
        </f:facet>
- 
-       <p:ajax event="rowEdit" listener="#{adminView.onRowEdit}" update=":form:msgs" />
-       <p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}" update=":form:msgs" />  
- 
-       <p:column headerText="Namn">
-           <p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{sensor.name}" /></f:facet>
-               <f:facet name="input"><p:inputText value="#{sensor.name}" style="width:100%" label="Name"/></f:facet>
-           </p:cellEditor>
-       </p:column>
- 
-       <p:column headerText="Beskrivning">
-           <p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{sensor.description}" /></f:facet>
-               <f:facet name="input"><p:inputText value="#{sensor.description}" style="width:100%" label="description"/></f:facet>
-           </p:cellEditor>
-       </p:column>
-       
-       <p:column headerText="Sensor typ">
-           <p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{sensor.sensorType.sensorTypeId}" /></f:facet>
-               <f:facet name="input"><p:inputText value="#{sensor.sensorType.sensorTypeId}" style="width:100%" label="sensorType"/></f:facet>
-           </p:cellEditor>
-       </p:column>
- 
-       <p:column style="width:32px">
-           <p:rowEditor />
-       </p:column>
-   </p:dataTable>
-  <p:dataTable id="table2" var="connectedsensor" value="#{adminView.sensorsNotInDb}" editable="true" style="margin-bottom:20px">
-       <f:facet name="header">
+
+			<p:ajax event="rowEdit" listener="#{adminView.onRowEdit}"
+				update=":form:msgs" />
+			<p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}"
+				update=":form:msgs" />
+
+			<p:column headerText="Namn">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sensor.name}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sensor.name}" style="width:100%"
+							label="Name" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Beskrivning">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sensor.description}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sensor.description}" style="width:100%"
+							label="description" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Sensor typ">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sensor.sensorType.sensorTypeId}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu  style="width:100%"
+							value="#{sensor.sensorType.sensorTypeId}">
+							<f:selectItems value="#{adminView.sensorTypeList}"
+								var="sensorTypeList" itemLabel="#{sensorTypeList.description}"
+								itemValue="#{sensorTypeList.sensorTypeId}"  />
+						</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+		</p:dataTable>
+		<p:dataTable id="table2" var="connectedsensor"
+			value="#{adminView.sensorsNotInDb}" editable="true"
+			style="margin-bottom:20px">
+			<f:facet name="header">
            Registrera sensor i databasen
        </f:facet>
-       
-      <p:ajax event="rowEdit" listener="#{adminView.onRowEdit}" update=":form:msgs" />
-       <p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}" update=":form:msgs" />
-       
-       <p:column headerText="Adress">
-           <p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{connectedsensor.address}" /></f:facet>
-               <f:facet name="input"><p:inputText value="#{connectedsensor.address}" style="width:100%" label="Adress"/></f:facet>
-           </p:cellEditor>
-       </p:column>
-       <p:column headerText="Namn">
-           <p:cellEditor>
-               <f:facet name="output"><h:outputText value="#{connectedsensor.name}" /></f:facet>
-               <f:facet name="input"><p:inputText value="#{connectedsensor.name}" style="width:100%" label="Name"/></f:facet>
-           </p:cellEditor>
-       </p:column>
-       <p:column style="width:32px">
-           <p:rowEditor />
-       </p:column>
-   </p:dataTable>
+
+			<p:ajax event="rowEdit" listener="#{adminView.onRowEdit}"
+				update=":form:msgs" />
+			<p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}"
+				update=":form:msgs" />
+
+			<p:column headerText="Adress">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{connectedsensor.address}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{connectedsensor.address}" style="width:100%"
+							label="Adress" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Namn">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{connectedsensor.name}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{connectedsensor.name}" style="width:100%"
+							label="Name" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:32px">
+				<p:rowEditor />
+			</p:column>
+		</p:dataTable>
 	</h:form>
 
 	<script type="text/javascript">

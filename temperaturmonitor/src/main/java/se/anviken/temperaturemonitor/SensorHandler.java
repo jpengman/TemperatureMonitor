@@ -1,5 +1,7 @@
 package se.anviken.temperaturemonitor;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class SensorHandler {
 
 	protected List<Sensor> sensorList = null;
 	protected List<SensorType> sensorTypeList = null;
+	private List<Sensor> sensorsNotInDb = null;
 
 	public static int SENSOR_ID = 1;
 	public static int SENSOR_NAME = 2;
@@ -75,4 +78,56 @@ public class SensorHandler {
 	public void setSensorTypeList(List<SensorType> sensorTypeList) {
 		this.sensorTypeList = sensorTypeList;
 	}
+	
+	public List<String> getConnectedSensors() {
+
+		File file = new File("/mnt/1wire");
+		String[] directories = file.list(new FilenameFilter() {
+			@Override
+			public boolean accept(File current, String name) {
+				if (name.startsWith("28.")) {
+					return new File(current, name).isDirectory();
+				} else {
+					return false;
+				}
+			}
+		});
+		List<String> dirList = new ArrayList<String>();
+		for (int i = 0; i < directories.length; i++) {
+			dirList.add(directories[i]);
+		}
+		return dirList;
+	}
+
+	public List<Sensor> getSensorsNotInDb() {
+		if (this.sensorsNotInDb == null) {
+			reloadSensorsNotInDb();
+		}
+		return this.sensorsNotInDb;
+	}
+
+	protected void reloadSensorsNotInDb() {
+		List<String> connectedSensors = getConnectedSensors();
+		List<Sensor> inDb = getSensorList();
+		List<Sensor> notInDb = new ArrayList<Sensor>();
+		for (String address : connectedSensors) {
+			boolean isInDb = false;
+			for (Sensor sensor : inDb) {
+				if (sensor.getAddress().equals(address)) {
+					isInDb = true;
+				}
+			}
+			if (!isInDb) {
+				Sensor newSensor = new Sensor();
+				newSensor.setAddress(address);
+				notInDb.add(newSensor);
+			}
+		}
+		this.sensorsNotInDb = notInDb;
+	}
+
+	public void setSensorsNotInDb(List<Sensor> sensorList) {
+		this.sensorsNotInDb = sensorList;
+	}
+	
 }
