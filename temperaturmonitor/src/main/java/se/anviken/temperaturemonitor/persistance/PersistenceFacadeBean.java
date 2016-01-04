@@ -15,5 +15,4 @@ public class PersistenceFacadeBean implements PersistenceFacade {
 		persistenceManager.doUpdateSensor(sensor);
 		
 	}
-
 }

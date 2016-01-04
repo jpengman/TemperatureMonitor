@@ -13,8 +13,6 @@ public class PersistenceManagerBean implements PersistenceManager {
 	@Inject
 	private EntityManager em;
 	
-
-
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void doUpdateSensor(Sensor sensor) {

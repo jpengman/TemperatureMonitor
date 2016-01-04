@@ -38,7 +38,7 @@ public class SensorHandler {
 		List<String> stringList = new ArrayList<String>();
 		for (Sensor sensor : getSensorList()) {
 			if (sensorType == null
-					|| sensorType.intValue() == sensor.getSensorTypeId()) {
+					|| sensorType.intValue() == sensor.getSensorType().getSensorTypeId()) {
 				if (whatToGet == SENSOR_NAME) {
 					stringList.add(sensor.getName());
 				} else if (whatToGet == SENSOR_ADRESS) {

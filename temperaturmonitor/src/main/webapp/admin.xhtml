@@ -37,13 +37,11 @@
  
    <p:dataTable id="table" var="sensor" value="#{adminView.sensors}" editable="true" style="margin-bottom:20px">
        <f:facet name="header">
-           Row Editing
+           Editera Sensorbeskrivningar
        </f:facet>
  
        <p:ajax event="rowEdit" listener="#{adminView.onRowEdit}" update=":form:msgs" />
-       <p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}" update=":form:msgs" />
- 
-       
+       <p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}" update=":form:msgs" />  
  
        <p:column headerText="Namn">
            <p:cellEditor>
@@ -63,7 +61,30 @@
            <p:rowEditor />
        </p:column>
    </p:dataTable>
- 
+  <p:dataTable id="table2" var="connectedsensor" value="#{adminView.sensorsNotInDb}" editable="true" style="margin-bottom:20px">
+       <f:facet name="header">
+           Registrera sensor i databasen
+       </f:facet>
+       
+      <p:ajax event="rowEdit" listener="#{adminView.onRowEdit}" update=":form:msgs" />
+       <p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}" update=":form:msgs" />
+       
+       <p:column headerText="Adress">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{connectedsensor.address}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{connectedsensor.address}" style="width:100%" label="Adress"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+       <p:column headerText="Namn">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{connectedsensor.name}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{connectedsensor.name}" style="width:100%" label="Name"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+       <p:column style="width:32px">
+           <p:rowEditor />
+       </p:column>
+   </p:dataTable>
 	</h:form>
 
 	<script type="text/javascript">

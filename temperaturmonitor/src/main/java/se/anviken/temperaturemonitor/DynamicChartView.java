@@ -45,6 +45,7 @@ public class DynamicChartView extends ButtonGroupsHandler implements Serializabl
 
 	public void setNoOfHours(int noOfHours) {
 		this.noOfHours = noOfHours;
+		updateSeries();
 	}
 
 	@PostConstruct

@@ -41,11 +41,15 @@ public class Sensor implements Serializable {
 	@Column(name="reset_interval")
 	private int resetInterval;
 
-	@Column(name="sensor_type_id")
+	@ManyToOne
+	@JoinColumn(name="sensor_type_id",referencedColumnName="sensor_type_id")
+	private SensorType sensorType;
+	
+	/*@Column(name="sensor_type_id")
 	private int sensorTypeId;
 
 	public Sensor() {
-	}
+	}*/
 
 	public int getSensorId() {
 		return this.sensorId;
@@ -111,12 +115,21 @@ public class Sensor implements Serializable {
 		this.resetInterval = resetInterval;
 	}
 
-	public int getSensorTypeId() {
-		return this.sensorTypeId;
+	public SensorType getSensorType() {
+		return this.sensorType;
 	}
 
-	public void setSensorTypeId(int sensorTypeId) {
-		this.sensorTypeId = sensorTypeId;
+	public void setSensorType(SensorType sensorType) {
+		this.sensorType = sensorType;
 	}
+	
+	/*public int getSensorTypeId() {
+		return this.sensorTypeId;
+	}*/
+
+	/*public void setSensorTypeId(int sensorTypeId) {
+		this.sensorTypeId = sensorTypeId;
+	}*/
+	
 
 }
