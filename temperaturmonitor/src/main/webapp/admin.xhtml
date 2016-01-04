@@ -56,6 +56,13 @@
                <f:facet name="input"><p:inputText value="#{sensor.description}" style="width:100%" label="description"/></f:facet>
            </p:cellEditor>
        </p:column>
+       
+       <p:column headerText="Sensor typ">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{sensor.sensorType.sensorTypeId}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{sensor.sensorType.sensorTypeId}" style="width:100%" label="sensorType"/></f:facet>
+           </p:cellEditor>
+       </p:column>
  
        <p:column style="width:32px">
            <p:rowEditor />
