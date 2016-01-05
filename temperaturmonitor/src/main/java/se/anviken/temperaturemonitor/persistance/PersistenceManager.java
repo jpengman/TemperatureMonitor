@@ -7,4 +7,6 @@ public interface PersistenceManager {
 
 	public void deleteSensor(Sensor sensor);
 
+	public void doAddSensor(Sensor sensor);
+
 }

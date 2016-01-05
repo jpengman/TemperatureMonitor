@@ -94,7 +94,7 @@
 			</p:column>
 			<p:column style="width:32px">
 				<p:commandButton action="#{adminView.deleteSensor(sensor)}" ajax="true"
-					update="table" process="@this" onerror=""
+					update=":form:table2 :form:table" process="@this" onerror=""
 					icon="ui-icon-close" title="Tabort sensor">
 				</p:commandButton>
 			</p:column>
@@ -106,8 +106,8 @@
            Registrera sensor i databasen
        </f:facet>
 
-			<p:ajax event="rowEdit" listener="#{adminView.onRowEdit}"
-				update=":form:msgs" />
+			<p:ajax event="rowEdit" listener="#{adminView.onAddSensor}"
+				update=":form:msgs :form:table :form:table2" />
 			<p:ajax event="rowEditCancel" listener="#{adminView.onRowCancel}"
 				update=":form:msgs" />
 

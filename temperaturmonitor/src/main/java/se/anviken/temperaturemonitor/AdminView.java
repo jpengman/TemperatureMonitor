@@ -113,8 +113,12 @@ public class AdminView extends SensorHandler implements Serializable {
 
 	public void onRowEdit(RowEditEvent event) {
 		persistenceFacade.updateSensor((Sensor) event.getObject());
-		reloadSensorsNotInDb();
 		reloadSensors();
+	}
+	public void onAddSensor(RowEditEvent event) {
+		persistenceFacade.addSensor((Sensor) event.getObject());
+		reloadSensors();
+		reloadSensorsNotInDb();
 	}
 
 	public void onRowCancel(RowEditEvent event) {
@@ -126,6 +130,7 @@ public class AdminView extends SensorHandler implements Serializable {
 	public void deleteSensor(Sensor sensor){
 		persistenceFacade.deleteSensor(sensor);
 		reloadSensors();
+		reloadSensorsNotInDb();
 	}
 
 }
