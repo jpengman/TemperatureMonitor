@@ -120,6 +120,7 @@ public class SensorHandler {
 			if (!isInDb) {
 				Sensor newSensor = new Sensor();
 				newSensor.setAddress(address);
+				newSensor.setSensorType(new SensorType());
 				notInDb.add(newSensor);
 			}
 		}

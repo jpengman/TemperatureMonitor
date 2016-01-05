@@ -75,15 +75,19 @@ public class AdminView extends SensorHandler implements Serializable {
 	}
 
 	private Sensor selectedSensor;
-
+	
 	@PostConstruct
 	public void init() {
-		TypedQuery<Sensor> sensorQuery = em.createNamedQuery("Sensor.findAll",
-				Sensor.class);
-		sensorList = sensorQuery.getResultList();
+		reloadSensors();
 		TypedQuery<SensorType> sensorTypeQuery = em.createNamedQuery("SensorType.findAll",
 				SensorType.class);
 		sensorTypeList = sensorTypeQuery.getResultList();
+	}
+
+	private void reloadSensors() {
+		TypedQuery<Sensor> sensorQuery = em.createNamedQuery("Sensor.findAll",
+				Sensor.class);
+		sensorList = sensorQuery.getResultList();
 	}
 
 	public void setService(SensorService service) {
@@ -110,12 +114,18 @@ public class AdminView extends SensorHandler implements Serializable {
 	public void onRowEdit(RowEditEvent event) {
 		persistenceFacade.updateSensor((Sensor) event.getObject());
 		reloadSensorsNotInDb();
+		reloadSensors();
 	}
 
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Edit Cancelled",
 				((Sensor) event.getObject()).getName());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
+	public void deleteSensor(Sensor sensor){
+		persistenceFacade.deleteSensor(sensor);
+		reloadSensors();
 	}
 
 }

@@ -15,4 +15,9 @@ public class PersistenceFacadeBean implements PersistenceFacade {
 		persistenceManager.doUpdateSensor(sensor);
 		
 	}
+	@Override
+	public void deleteSensor(Sensor sensor) {
+		persistenceManager.deleteSensor(sensor);
+		
+	}
 }

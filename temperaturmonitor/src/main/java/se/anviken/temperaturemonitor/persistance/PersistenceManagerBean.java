@@ -19,5 +19,15 @@ public class PersistenceManagerBean implements PersistenceManager {
 		em.merge(sensor);
 		em.flush();
 		
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void deleteSensor(Sensor sensor) {
+		Sensor sensorToDelete = em.find(Sensor.class, sensor.getSensorId());
+		em.persist(sensorToDelete);
+		em.remove(sensorToDelete);
+		em.flush();
+		
 	}	
 }
