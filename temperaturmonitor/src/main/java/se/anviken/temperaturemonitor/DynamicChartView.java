@@ -23,6 +23,7 @@ import org.primefaces.model.chart.DateAxis;
 import org.primefaces.model.chart.LineChartSeries;
 
 import se.anviken.temperaturemonitor.persistance.Sensor;
+import se.anviken.temperaturemonitor.persistance.SensorType;
 import se.anviken.temperaturemonitor.persistance.Temperature;
 
 @ManagedBean
@@ -50,10 +51,14 @@ public class DynamicChartView extends ButtonGroupsHandler implements Serializabl
 
 	@PostConstruct
 	public void init() {
-		createDateModel();
 		TypedQuery<Sensor> sensorQuery = em.createNamedQuery("Sensor.findAll",
 				Sensor.class);
 		setSensorList(sensorQuery.getResultList());
+		TypedQuery<SensorType> sensorTypeQuery = em.createNamedQuery("SensorType.findAll",
+				SensorType.class);
+		sensorTypeList = sensorTypeQuery.getResultList();
+		createDateModel();
+		
 	}
 
 	public LineChartModel getDateModel() {
@@ -63,7 +68,7 @@ public class DynamicChartView extends ButtonGroupsHandler implements Serializabl
 	private void createDateModel() {
 		dateModel = new LineChartModel();
 		setInterval(Period.hours(noOfHours));
-		addSerie(14);
+		addSerie(getSensorList().get(0).getSensorId());
 
 		dateModel.setAnimate(true);
 		dateModel.setDatatipFormat("%s %.1f");

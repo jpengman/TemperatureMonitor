@@ -27,6 +27,18 @@
 
        <p:chart id="chart" type="line" model="#{dynamicChartView.dateModel}" style="height:600px;"/>
     
+    
+     <p:dataTable id="cars" var="row" value="#{dynamicChartView.sensorTypeList}" >                    
+        <p:columns value="#{dynamicChartView.sensorTypeList}" var="sensorType" columnIndexVar="colIndex">
+              <p:selectCheckboxMenu id="allSensors" value="#{dynamicChartView.selectedOptions}" label="#{sensorType.description}"
+                              filter="true" filterMatchMode="startsWith" panelStyle="width:400px">
+            <f:selectItems value="#{dynamicChartView.sensorNames}"></f:selectItems>
+        </p:selectCheckboxMenu>
+              
+        </p:columns>
+    </p:dataTable>
+    
+    
     <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
     
     

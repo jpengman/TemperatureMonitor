@@ -5,131 +5,150 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.util.Date;
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The persistent class for the sensors database table.
  * 
  */
 @Entity
-@Table(name="sensors")
-@NamedQueries({@NamedQuery(name="Sensor.findAll", query="SELECT s FROM Sensor s order by s.name"),
-	@NamedQuery(name="Sensor.findWithId", query="SELECT s FROM Sensor s where s.sensorId = :sensorId")
+@Table(name = "sensors")
+@NamedQueries({ @NamedQuery(name = "Sensor.findAll", query = "SELECT s FROM Sensor s order by s.name"),
+      @NamedQuery(name = "Sensor.findWithId", query = "SELECT s FROM Sensor s where s.sensorId = :sensorId")
 })
-public class Sensor implements Serializable {
-	private static final long serialVersionUID = 1L;
+@XmlRootElement
+public class Sensor implements Serializable
+{
+   private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="sensor_id")
-	private int sensorId;
+   @Id
+   @Column(name = "sensor_id")
+   private int sensorId;
 
-	private String address;
+   private String address;
 
-	private String description;
+   private String description;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="last_logged")
-	private Date lastLogged;
+   @Temporal(TemporalType.TIMESTAMP)
+   @Column(name = "last_logged")
+   private Date lastLogged;
 
-	@Column(name="last_logged_temp")
-	private float lastLoggedTemp;
+   @Column(name = "last_logged_temp")
+   private float lastLoggedTemp;
 
-	private String name;
+   private String name;
 
-	private String offset;
+   private String offset;
 
-	@Column(name="reset_interval")
-	private int resetInterval;
+   @Column(name = "reset_interval")
+   private int resetInterval;
 
-	@ManyToOne
-	@JoinColumn(name="sensor_type_id",referencedColumnName="sensor_type_id")
-	private SensorType sensorType;
-	
-	/*@Column(name="sensor_type_id")
-	private int sensorTypeId;
+   @ManyToOne
+   @JoinColumn(name = "sensor_type_id", referencedColumnName = "sensor_type_id")
+   private SensorType sensorType;
 
-	public Sensor() {
-	}*/
+   /*@Column(name="sensor_type_id")
+   private int sensorTypeId;
 
-	public int getSensorId() {
-		return this.sensorId;
-	}
+   public Sensor() {
+   }*/
 
-	public void setSensorId(int sensorId) {
-		this.sensorId = sensorId;
-	}
+   public int getSensorId()
+   {
+      return this.sensorId;
+   }
 
-	public String getAddress() {
-		return this.address;
-	}
+   public void setSensorId(int sensorId)
+   {
+      this.sensorId = sensorId;
+   }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+   public String getAddress()
+   {
+      return this.address;
+   }
 
-	public String getDescription() {
-		return this.description;
-	}
+   public void setAddress(String address)
+   {
+      this.address = address;
+   }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+   public String getDescription()
+   {
+      return this.description;
+   }
 
-	public Date getLastLogged() {
-		return this.lastLogged;
-	}
+   public void setDescription(String description)
+   {
+      this.description = description;
+   }
 
-	public void setLastLogged(Date lastLogged) {
-		this.lastLogged = lastLogged;
-	}
+   public Date getLastLogged()
+   {
+      return this.lastLogged;
+   }
 
-	public float getLastLoggedTemp() {
-		return this.lastLoggedTemp;
-	}
+   public void setLastLogged(Date lastLogged)
+   {
+      this.lastLogged = lastLogged;
+   }
 
-	public void setLastLoggedTemp(float lastLoggedTemp) {
-		this.lastLoggedTemp = lastLoggedTemp;
-	}
+   public float getLastLoggedTemp()
+   {
+      return this.lastLoggedTemp;
+   }
 
-	public String getName() {
-		return this.name;
-	}
+   public void setLastLoggedTemp(float lastLoggedTemp)
+   {
+      this.lastLoggedTemp = lastLoggedTemp;
+   }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+   public String getName()
+   {
+      return this.name;
+   }
 
-	public String getOffset() {
-		return this.offset;
-	}
+   public void setName(String name)
+   {
+      this.name = name;
+   }
 
-	public void setOffset(String offset) {
-		this.offset = offset;
-	}
+   public String getOffset()
+   {
+      return this.offset;
+   }
 
-	public int getResetInterval() {
-		return this.resetInterval;
-	}
+   public void setOffset(String offset)
+   {
+      this.offset = offset;
+   }
 
-	public void setResetInterval(int resetInterval) {
-		this.resetInterval = resetInterval;
-	}
+   public int getResetInterval()
+   {
+      return this.resetInterval;
+   }
 
-	public SensorType getSensorType() {
-		return this.sensorType;
-	}
+   public void setResetInterval(int resetInterval)
+   {
+      this.resetInterval = resetInterval;
+   }
 
-	public void setSensorType(SensorType sensorType) {
-		this.sensorType = sensorType;
-	}
-	
-	/*public int getSensorTypeId() {
-		return this.sensorTypeId;
-	}*/
+   public SensorType getSensorType()
+   {
+      return this.sensorType;
+   }
 
-	/*public void setSensorTypeId(int sensorTypeId) {
-		this.sensorTypeId = sensorTypeId;
-	}*/
-	
+   public void setSensorType(SensorType sensorType)
+   {
+      this.sensorType = sensorType;
+   }
+
+   /*public int getSensorTypeId() {
+   	return this.sensorTypeId;
+   }*/
+
+   /*public void setSensorTypeId(int sensorTypeId) {
+   	this.sensorTypeId = sensorTypeId;
+   }*/
 
 }
