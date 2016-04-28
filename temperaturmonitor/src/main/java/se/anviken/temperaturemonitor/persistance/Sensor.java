@@ -14,8 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "sensors")
 @NamedQueries({ @NamedQuery(name = "Sensor.findAll", query = "SELECT s FROM Sensor s order by s.name"),
-      @NamedQuery(name = "Sensor.findWithId", query = "SELECT s FROM Sensor s where s.sensorId = :sensorId")
-})
+@NamedQuery(name = "Sensor.findWithId", query = "SELECT s FROM Sensor s where s.sensorId = :sensorId")})
 @XmlRootElement
 public class Sensor implements Serializable
 {
